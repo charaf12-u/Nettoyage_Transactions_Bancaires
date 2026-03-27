@@ -1,0 +1,198 @@
+{
+  "project_name": "FinanceCore Data Cleaning Pipeline",
+  "project_type": "Data Analytics",
+  "dataset": "bank_transactions.csv",
+  "total_rows": 2060,
+  "total_columns": 16,
+  "deadline": "2026-03-27",
+  "epics": [
+
+    {
+      "epic": "Importation et Exploration des Données",
+      "tasks": [
+        {
+          "task_name": "Lecture du dataset",
+          "subtasks": [
+            "Lire le fichier bank_transactions.csv avec pandas",
+            "Afficher head() pour visualiser les premières lignes",
+            "Vérifier shape du dataset",
+            "Examiner les types de colonnes avec dtypes"
+          ]
+        },
+        {
+          "task_name": "Analyse des données",
+          "subtasks": [
+            "Utiliser describe() pour statistiques générales",
+            "Identifier colonnes mal typées",
+            "Identifier formats incohérents",
+            "Analyser distribution des montants"
+          ]
+        },
+        {
+          "task_name": "Analyse valeurs manquantes",
+          "subtasks": [
+            "Calculer taux de valeurs manquantes par colonne",
+            "Identifier colonnes critiques avec valeurs manquantes",
+            "Visualiser distribution des données"
+          ]
+        },
+        {
+          "task_name": "Détection des doublons",
+          "subtasks": [
+            "Identifier doublons avec transaction_id",
+            "Comparer les dates des transactions dupliquées",
+            "Analyser cohérence des transactions"
+          ]
+        }
+      ]
+    },
+
+    {
+      "epic": "Nettoyage des Données",
+      "tasks": [
+        {
+          "task_name": "Suppression des doublons",
+          "subtasks": [
+            "Supprimer doublons sur transaction_id",
+            "Conserver première occurrence"
+          ]
+        },
+        {
+          "task_name": "Correction formats dates",
+          "subtasks": [
+            "Convertir dates au format YYYY-MM-DD HH:MM:SS",
+            "Corriger formats mixtes"
+          ]
+        },
+        {
+          "task_name": "Correction montants",
+          "subtasks": [
+            "Remplacer virgules par points",
+            "Convertir colonne montant en float"
+          ]
+        },
+        {
+          "task_name": "Nettoyage colonnes textuelles",
+          "subtasks": [
+            "Supprimer suffixe ' EUR' dans solde_avant",
+            "Convertir solde_avant en float",
+            "Convertir devises en majuscules",
+            "Harmoniser segment_client",
+            "Supprimer espaces dans agence"
+          ]
+        },
+        {
+          "task_name": "Traitement valeurs manquantes",
+          "subtasks": [
+            "Imputer score_credit_client avec médiane",
+            "Imputer segment_client avec mode",
+            "Imputer agence avec mode"
+          ]
+        }
+      ]
+    },
+
+    {
+      "epic": "Détection des Valeurs Aberrantes",
+      "tasks": [
+        {
+          "task_name": "Analyse des montants",
+          "subtasks": [
+            "Appliquer méthode IQR",
+            "Identifier montants extrêmes",
+            "Marquer anomalies"
+          ]
+        },
+        {
+          "task_name": "Analyse score crédit",
+          "subtasks": [
+            "Détecter scores négatifs",
+            "Détecter scores supérieurs à 850",
+            "Appliquer Z-score ou IQR"
+          ]
+        },
+        {
+          "task_name": "Création flag anomalies",
+          "subtasks": [
+            "Créer colonne is_anomaly",
+            "Documenter décision traitement anomalies"
+          ]
+        }
+      ]
+    },
+
+    {
+      "epic": "Feature Engineering",
+      "tasks": [
+        {
+          "task_name": "Extraction variables temporelles",
+          "subtasks": [
+            "Extraire année",
+            "Extraire mois",
+            "Extraire trimestre",
+            "Extraire jour de semaine"
+          ]
+        },
+        {
+          "task_name": "Validation montants EUR",
+          "subtasks": [
+            "Calculer montant_eur_verifie",
+            "Comparer avec montant_eur existant"
+          ]
+        },
+        {
+          "task_name": "Catégorisation du risque",
+          "subtasks": [
+            "Créer colonne categorie_risque",
+            "Low >= 700",
+            "Medium 580-699",
+            "High < 580"
+          ]
+        },
+        {
+          "task_name": "Agrégations clients",
+          "subtasks": [
+            "Calculer solde_net par client",
+            "Calculer nombre transactions par client",
+            "Calculer montant moyen",
+            "Calculer nombre produits distincts"
+          ]
+        },
+        {
+          "task_name": "Indicateurs agence",
+          "subtasks": [
+            "Calculer taux_rejet par agence"
+          ]
+        }
+      ]
+    },
+
+    {
+      "epic": "Export et Validation",
+      "tasks": [
+        {
+          "task_name": "Validation finale",
+          "subtasks": [
+            "Vérifier absence valeurs manquantes critiques",
+            "Vérifier cohérence types colonnes",
+            "Contrôler dataset final"
+          ]
+        },
+        {
+          "task_name": "Export dataset",
+          "subtasks": [
+            "Exporter financecore_clean.csv"
+          ]
+        },
+        {
+          "task_name": "Documentation",
+          "subtasks": [
+            "Créer fichier DECISIONS.md",
+            "Documenter décisions nettoyage"
+          ]
+        }
+      ]
+    }
+
+  ]
+}
