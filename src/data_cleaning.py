@@ -1,6 +1,8 @@
 import pandas as pd
 
 def cleaning_data(df):
+
+    df = df.copy()
     
     # --> calculs le nomber de columns avants cleaning
     N_avant = df.shape[0]
@@ -10,9 +12,7 @@ def cleaning_data(df):
 
     # --> modifier le format de date
     df["date_transaction"] = pd.to_datetime(
-        df["date_transaction"],
-        dayfirst=True,
-        errors="coerce"
+        df["date_transaction"], errors="coerce"
     )
     df["date_transaction"] = df["date_transaction"].dt.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -41,17 +41,17 @@ def cleaning_data(df):
     # --> imputer score_credit_client avec mediane
     if "score_credit_client" in df.columns:
         median_score = df["score_credit_client"].median()
-        df["score_credit_client"].fillna(median_score, inplace=True)
+        df["score_credit_client"] = df["score_credit_client"].fillna(median_score)
 
     # --> imputer segment_client avec le mode
     if "segment_client" in df.columns:
         mode_segment = df["segment_client"].mode()[0]
-        df["segment_client"].fillna(mode_segment, inplace=True)
+        df["segment_client"] = df["segment_client"].fillna(mode_segment)
 
     # --> imputer agence avec le mode
     if "agence" in df.columns:
         mode_agence = df["agence"].mode()[0]
-        df["agence"].fillna(mode_agence, inplace=True)
+        df["agence"] = df["agence"].fillna(mode_agence)
 
 
     # --> calculs le nomber de columns apres cleaning
